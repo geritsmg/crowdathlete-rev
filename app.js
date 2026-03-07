@@ -130,6 +130,12 @@ const app = {
 
         STATE.activeView = viewId;
 
+        // Toggle landing body class for nav transparency
+        document.body.classList.toggle('on-landing', viewId === 'landing');
+
+        // Scroll to top on navigation
+        window.scrollTo(0, 0);
+
         // Update Nav
         if (viewId !== 'landing') {
             document.getElementById('main-nav').classList.remove('hidden');
@@ -221,8 +227,124 @@ const app = {
         this.navigate('register');
     },
 
+    navigateHome() {
+        if (STATE.currentUserType === 'investor') {
+            this.navigate('marketplace');
+        } else if (STATE.currentUserType === 'athlete') {
+            this.navigate('athlete-dashboard');
+        } else {
+            this.navigate('landing');
+        }
+    },
+
     viewLogin() {
         this.navigate('login');
+    },
+
+    socialAuth(provider) {
+        const type = document.getElementById('register-type').value;
+        const modal = document.getElementById('oauth-modal');
+        const overlay = document.getElementById('oauth-modal-overlay');
+        const header = document.getElementById('oauth-modal-header');
+        const accountsEl = document.getElementById('oauth-accounts');
+        const addBtn = document.getElementById('oauth-add-account');
+
+        const mockAccounts = provider === 'google'
+            ? [
+                { name: 'Alex Rivera',    email: 'alex.rivera@gmail.com',   color: '#ea4335' },
+                { name: 'Jordan Smith',   email: 'jordan.smith@gmail.com',  color: '#34a853' },
+              ]
+            : [
+                { name: 'Alex Rivera',    email: 'alex.rivera@outlook.com', color: '#0078d4' },
+                { name: 'Jordan Smith',   email: 'jordan.smith@hotmail.com',color: '#106ebe' },
+              ];
+
+        const isGoogle = provider === 'google';
+
+        // Header
+        header.innerHTML = `
+            <div class="oauth-logo">
+                ${isGoogle
+                    ? `<svg width="24" height="24" viewBox="0 0 18 18" fill="none"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908C16.658 14.013 17.64 11.705 17.64 9.2z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"/><path d="M3.964 10.707A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.039l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.96L3.964 7.294C4.672 5.163 6.656 3.58 9 3.58z" fill="#EA4335"/></svg>`
+                    : `<svg width="24" height="24" viewBox="0 0 18 18" fill="none"><path d="M0 0h8.571v8.571H0z" fill="#F25022"/><path d="M9.429 0H18v8.571H9.429z" fill="#7FBA00"/><path d="M0 9.429h8.571V18H0z" fill="#00A4EF"/><path d="M9.429 9.429H18V18H9.429z" fill="#FFB900"/></svg>`
+                }
+                <span style="font-size:1.1rem;font-weight:700;color:#202124;">${isGoogle ? 'Google' : 'Microsoft'}</span>
+            </div>
+            <h3>Sign in to CrowdAthletes</h3>
+            <p>to continue to CrowdAthletes</p>
+        `;
+
+        // Accounts list
+        accountsEl.innerHTML = mockAccounts.map(acc => `
+            <button class="oauth-account-item" onclick="app.completeSocialAuth('${acc.email}', '${acc.name}', '${provider}')">
+                <div class="oauth-account-avatar" style="background:${acc.color};">${acc.name.charAt(0)}</div>
+                <div class="oauth-account-info">
+                    <span class="oauth-account-name">${acc.name}</span>
+                    <span class="oauth-account-email">${acc.email}</span>
+                </div>
+            </button>
+        `).join('');
+
+        // Add / use another account
+        addBtn.innerHTML = `
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/><path d="M19 8v6M22 11h-6"/></svg>
+            Use another account
+        `;
+        addBtn.onclick = () => {
+            this.closeOAuthModal();
+            this.showToast(`Enter your ${isGoogle ? 'Google' : 'Microsoft'} email below instead.`);
+        };
+
+        modal.className = `oauth-modal ${provider}`;
+        overlay.classList.remove('hidden');
+    },
+
+    completeSocialAuth(email, name, provider) {
+        this.closeOAuthModal();
+        const type = document.getElementById('register-type').value;
+
+        // If account already exists, log them in
+        if (STATE.investors[email]) {
+            STATE.currentUserEmail = email;
+            STATE.currentUserType = 'investor';
+            saveState();
+            this.showToast(`Welcome back, ${name}!`);
+            this.navigate('marketplace');
+            this.renderNavbar();
+            return;
+        }
+        if (STATE.athletes[email] !== undefined) {
+            STATE.currentUserEmail = email;
+            STATE.currentUserType = 'athlete';
+            saveState();
+            this.showToast(`Welcome back, ${name}!`);
+            this.navigate('athlete-dashboard');
+            this.renderAthleteDashboard();
+            this.renderNavbar();
+            return;
+        }
+
+        // New account — register and proceed to onboarding
+        STATE.currentUserEmail = email;
+        STATE.currentUserType = type;
+
+        if (type === 'investor') {
+            STATE.investors[email] = { balance: 10000, riskProfile: null, portfolio: [], name };
+            saveState();
+            this.showToast(`Signed in as ${name}!`);
+            this.navigate('onboarding-investor');
+        } else {
+            STATE.athletes[email] = null;
+            saveState();
+            this.showToast(`Signed in as ${name}!`);
+            this.navigate('onboarding-athlete-wizard');
+        }
+        this.renderNavbar();
+    },
+
+    closeOAuthModal(event) {
+        if (event && event.target !== document.getElementById('oauth-modal-overlay')) return;
+        document.getElementById('oauth-modal-overlay').classList.add('hidden');
     },
 
     submitRegister(e) {
