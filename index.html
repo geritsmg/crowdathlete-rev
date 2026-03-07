@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrowdAthletes - Invest in the Future of Sports</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- Navigation -->
+        <nav id="main-nav">
+            <div class="nav-container">
+                <div class="logo">
+                    <i data-lucide="activity"></i>
+                    <span>CrowdAthletes</span>
+                </div>
+                <div class="nav-links" id="nav-links-container">
+                    <!-- Links injected by JS -->
+                </div>
+                <div class="user-profile" id="nav-user-profile">
+                    <!-- User info injected by JS -->
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main id="main-content">
+            <!-- Views will be toggled here by JS -->
+
+            <!-- Landing Page View -->
+            <section id="view-landing" class="view active">
+                <div class="hero">
+                    <h1>Bridge the Gap. Back the Future.</h1>
+                    <p>The premium platform connecting high-potential athletes with forward-thinking investors.</p>
+                    <div class="card glass">
+                        <h2>Join the Revolution</h2>
+                        <div class="button-group">
+                            <button class="btn primary" onclick="app.navigate('guide-athlete')">I am an Athlete</button>
+                            <button class="btn secondary" onclick="app.navigate('guide-investor')">I am an
+                                Investor</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Guide: Athlete -->
+            <section id="view-guide-athlete" class="view hidden">
+                <div class="container fade-in" style="max-width: 800px; margin-top: 2rem;">
+                    <div class="page-header text-center">
+                        <h2>Athlete Guide</h2>
+                        <p>Focus on your craft. We'll handle the funding.</p>
+                    </div>
+                    <div class="card">
+                        <h3>What We Offer</h3>
+                        <p>CrowdAthletes allows you to raise capital from global investors to cover your living
+                            expenses, professional trainers, and equipment. You don't have to work an additional job;
+                            you can invest 100% of your time into yourself and your sport.</p>
+
+                        <h3 class="mt-4">The Deal</h3>
+                        <p>During the investment period, you are <strong>not expected</strong> to yield returns. The
+                            funds are yours to use for your athletic development as outlined in your Masterplan.</p>
+                        <p>When you make the jump to the professional level later on, you will pay back a pre-agreed
+                            percentage of your <strong>future contract and sponsorship earnings</strong> to your
+                            investors through our platform.</p>
+
+                        <h3 class="mt-4">Who we are looking for</h3>
+                        <p>We are seeking highly-driven, elite amateur or aspiring professional athletes who have a
+                            proven track record of regional or national success but lack the financial backing to turn
+                            pro. You must be willing to verify your identity and performance statistics with our team.
+                        </p>
+
+                        <div class="text-center mt-4">
+                            <button class="btn primary" onclick="app.viewRegister('athlete')">I Understand. Create My
+                                Profile</button>
+                            <div class="mt-2"><button class="btn secondary sm"
+                                    onclick="app.navigate('landing')">Back</button></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Guide: Investor -->
+            <section id="view-guide-investor" class="view hidden">
+                <div class="container fade-in" style="max-width: 800px; margin-top: 2rem;">
+                    <div class="page-header text-center">
+                        <h2>Investor Guide</h2>
+                        <p>Back the next generation of superstars.</p>
+                    </div>
+                    <div class="card">
+                        <h3>What is CrowdAthletes?</h3>
+                        <p>CrowdAthletes is a unique marketplace where you can invest directly into the future earnings
+                            of high-potential athletes.</p>
+
+                        <h3 class="mt-4">How it works</h3>
+                        <p>Athletes need funding today to pay for elite coaching, travel, and living expenses so they
+                            can focus entirely on reaching the professional leagues. In exchange for your capital,
+                            athletes sign a Smart Contract committing a percentage of their future professional earnings
+                            back to the platform.</p>
+
+                        <h3 class="mt-4">Secondary Market</h3>
+                        <p>You do not have to wait years for a payout. As an athlete performs well and their
+                            verification score rises, the perceived value of their future contract increases. You can
+                            trade your shares with other investors on our Secondary Market.</p>
+
+                        <div class="text-center mt-4">
+                            <button class="btn primary" onclick="app.viewRegister('investor')">I Understand. Start
+                                Investing</button>
+                            <div class="mt-2"><button class="btn secondary sm"
+                                    onclick="app.navigate('landing')">Back</button></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Registration -->
+            <section id="view-register" class="view hidden">
+                <div class="container fade-in" style="max-width: 500px; margin-top: 5rem;">
+                    <div class="card">
+                        <h2 id="register-title" class="text-center">Create Account</h2>
+                        <p class="text-center mb-4">Enter your email to register.</p>
+                        <form id="register-form" onsubmit="app.submitRegister(event)">
+                            <input type="hidden" id="register-type" name="type" value="investor">
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <input type="email" name="email" required placeholder="you@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" name="password" required placeholder="••••••••">
+                            </div>
+                            <button type="submit" class="btn primary full-width">Register</button>
+                        </form>
+                        <button class="btn secondary full-width mt-4" onclick="app.navigate('landing')">Cancel</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Login -->
+            <section id="view-login" class="view hidden">
+                <div class="container fade-in" style="max-width: 500px; margin-top: 5rem;">
+                    <div class="card">
+                        <h2 class="text-center">Welcome Back</h2>
+                        <p class="text-center mb-4">Log in to your account.</p>
+                        <form id="login-form" onsubmit="app.submitLogin(event)">
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <input type="email" name="email" required placeholder="you@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" name="password" required placeholder="••••••••">
+                            </div>
+                            <button type="submit" class="btn primary full-width">Login</button>
+                        </form>
+                        <button class="btn secondary full-width mt-4" onclick="app.navigate('landing')">Cancel</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Investor Onboarding (Risk Test) -->
+            <section id="view-onboarding-investor" class="view hidden">
+                <div class="container fade-in">
+                    <h2>Investor Risk Profile Test</h2>
+                    <p>Help us find the best athlete matches for your portfolio.</p>
+                    <div class="card">
+                        <form id="risk-test-form" onsubmit="app.submitRiskTest(event)">
+                            <div class="form-group">
+                                <label>1. What is your primary investment goal?</label>
+                                <select name="q1" required>
+                                    <option value="high">High ROI, willing to take risks</option>
+                                    <option value="medium">Balanced returns</option>
+                                    <option value="low">Supporting talent, safe returns</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>2. How long can you lock up this capital?</label>
+                                <select name="q2" required>
+                                    <option value="high">5+ years</option>
+                                    <option value="medium">2-5 years</option>
+                                    <option value="low">Less than 2 years</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn primary full-width">Complete Profile</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Investor Marketplace -->
+            <section id="view-marketplace" class="view hidden">
+                <div class="container fade-in">
+                    <div class="page-header">
+                        <h2>Athlete Marketplace</h2>
+                        <p>Discover and invest in Latin America's rising stars.</p>
+                    </div>
+
+                    <!-- Marketplace Filters -->
+                    <div class="filters-container"
+                        style="display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap;">
+                        <select id="filter-sport" class="form-input" onchange="app.renderMarketplace()"
+                            style="flex: 1; min-width: 150px; background: rgba(255,255,255,0.05); color: white; border: 1px solid rgba(255,255,255,0.1); padding: 0.75rem; border-radius: var(--radius-md);">
+                            <option value="all">All Sports</option>
+                            <option value="Tennis">Tennis</option>
+                            <option value="Soccer">Soccer</option>
+                            <option value="Track">Track & Field</option>
+                            <option value="Golf">Golf</option>
+                        </select>
+                        <select id="filter-country" class="form-input" onchange="app.renderMarketplace()"
+                            style="flex: 1; min-width: 150px; background: rgba(255,255,255,0.05); color: white; border: 1px solid rgba(255,255,255,0.1); padding: 0.75rem; border-radius: var(--radius-md);">
+                            <option value="all">All Countries</option>
+                            <!-- Options populated dynamically by JS -->
+                        </select>
+                        <select id="filter-age" class="form-input" onchange="app.renderMarketplace()"
+                            style="flex: 1; min-width: 150px; background: rgba(255,255,255,0.05); color: white; border: 1px solid rgba(255,255,255,0.1); padding: 0.75rem; border-radius: var(--radius-md);">
+                            <option value="all">All Ages</option>
+                            <option value="under18">Under 18</option>
+                            <option value="18to24">18 - 24</option>
+                            <option value="25plus">25+</option>
+                        </select>
+                    </div>
+
+                    <div class="grid" id="athlete-grid">
+                        <!-- Cards injected by JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Athlete Profile (Investor View) -->
+            <section id="view-athlete-profile" class="view hidden">
+                <div class="container fade-in" id="athlete-profile-container">
+                    <!-- Profile detail injected by JS -->
+                </div>
+            </section>
+
+            <!-- Investor Portfolio -->
+            <section id="view-portfolio" class="view hidden">
+                <div class="container fade-in">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                        <h2 style="margin: 0;">My Portfolio</h2>
+                        <button class="btn secondary" onclick="app.navigate('edit-investor-profile')">Edit Profile <i
+                                data-lucide="edit-2"></i></button>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-card glass">
+                            <h3>Total Invested</h3>
+                            <div class="stat-value" id="port-total-invested">$0</div>
+                        </div>
+                        <div class="stat-card glass">
+                            <h3>Est. ROI (Annual)</h3>
+                            <div class="stat-value text-green">14.5%</div>
+                        </div>
+                        <div class="stat-card glass">
+                            <h3>Athletes Backed</h3>
+                            <div class="stat-value" id="port-athletes-backed">0</div>
+                        </div>
+                    </div>
+                    <h3 class="mt-4">My Holdings</h3>
+                    <div class="list" id="portfolio-holdings">
+                        <!-- Holdings injected by JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Edit Investor Profile -->
+            <section id="view-edit-investor-profile" class="view hidden">
+                <div class="container fade-in">
+                    <h2>Edit Investor Profile</h2>
+                    <div class="card">
+                        <form id="edit-investor-form" onsubmit="app.submitInvestorEditProfile(event)">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" id="edit-inv-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Country</label>
+                                <input type="text" id="edit-inv-country" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Birthday</label>
+                                <input type="date" id="edit-inv-birthday" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Profile Image URL</label>
+                                <input type="url" id="edit-inv-image" placeholder="https://...">
+                            </div>
+                            <div class="form-group mt-4">
+                                <button type="submit" class="btn primary w-100">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Secondary Market -->
+            <section id="view-secondary-market" class="view hidden">
+                <div class="container fade-in">
+                    <h2>Trading Floor</h2>
+                    <p>Buy and sell athlete shares with other investors.</p>
+                    <div class="grid" id="secondary-market-grid">
+                        <!-- Orders injected by JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Athlete Onboarding WIZARD -->
+            <section id="view-onboarding-athlete-wizard" class="view hidden">
+                <div class="container fade-in">
+                    <div class="page-header text-center">
+                        <h2>Athlete Profile Creation</h2>
+                        <p>Complete your profile to unlock investor capital.</p>
+                    </div>
+
+                    <!-- Wizard Progress -->
+                    <div
+                        style="display: flex; justify-content: space-between; margin-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem;">
+                        <div id="wiz-step-1" class="text-green" style="font-weight: 700;">1. Basic Info</div>
+                        <div id="wiz-step-2" style="color: var(--color-text-muted);">2. Your Plan</div>
+                        <div id="wiz-step-3" style="color: var(--color-text-muted);">3. Statistics</div>
+                        <div id="wiz-step-4" style="color: var(--color-text-muted);">4. Contract</div>
+                    </div>
+
+                    <div class="card" id="wizard-content">
+                        <!-- Step 1: Basic Info -->
+                        <form id="wiz-form-1" onsubmit="app.nextWizardStep(1, event)">
+                            <h3>Step 1: Identity & Sport</h3>
+                            <div class="form-group mt-4">
+                                <label>Full Name</label>
+                                <input type="text" id="wiz-name" required placeholder="e.g. Carlos Silva">
+                            </div>
+                            <div class="form-group mt-4">
+                                <label>Country</label>
+                                <input type="text" id="wiz-country" required placeholder="e.g. Chile">
+                            </div>
+                            <div class="form-group">
+                                <label>Birthday</label>
+                                <input type="date" id="wiz-birthday" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Sport</label>
+                                <select id="wiz-sport" required onchange="app.renderDynamicSportFields()">
+                                    <option value="" disabled selected>Select your sport...</option>
+                                    <option value="Tennis">Tennis</option>
+                                    <option value="Soccer">Soccer</option>
+                                    <option value="Track">Track & Field</option>
+                                    <option value="Golf">Golf</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Profile Image URL (Optional)</label>
+                                <input type="url" id="wiz-image" placeholder="https://...">
+                            </div>
+                            <div class="form-group">
+                                <label>About Me</label>
+                                <textarea id="wiz-about" rows="3" required
+                                    placeholder="Tell investors a little bit about yourself!"></textarea>
+                            </div>
+                            <button type="submit" class="btn primary">Next Step <i
+                                    data-lucide="arrow-right"></i></button>
+                        </form>
+
+                        <!-- Step 2: The Plan (Hidden initially) -->
+                        <form id="wiz-form-2" class="hidden" onsubmit="app.nextWizardStep(2, event)">
+                            <h3>Step 2: The Masterplan</h3>
+                            <p class="mb-4">Investors want to know what you will achieve with their capital.</p>
+
+                            <div class="form-group mt-4">
+                                <label>What do you need the money for?</label>
+                                <textarea id="wiz-use" required rows="3"
+                                    placeholder="I need $15,000 to cover travel and coaching for the European Junior Circuit..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>For what period of time? (e.g. Next 12 months)</label>
+                                <input type="text" id="wiz-time" required placeholder="12 Months">
+                            </div>
+                            <div class="form-group">
+                                <label>Funding Goal ($)</label>
+                                <input type="number" id="wiz-goal" required placeholder="15000" min="1000">
+                            </div>
+                            <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                                <button type="button" class="btn secondary"
+                                    onclick="app.prevWizardStep(2)">Back</button>
+                                <button type="submit" class="btn primary">Next Step <i
+                                        data-lucide="arrow-right"></i></button>
+                            </div>
+                        </form>
+
+                        <!-- Step 3: Proof & Validation -->
+                        <form id="wiz-form-3" class="hidden" onsubmit="app.nextWizardStep(3, event)">
+                            <h3>Step 3: Statistics</h3>
+                            <p class="mb-4">Provide evidence of your track record to build trust with investors.</p>
+
+                            <!-- Dynamic fields based on sport -->
+                            <div id="sport-specific-stats-container">
+                                <!-- Injected by JS -->
+                                <p style="color: var(--color-text-muted); font-size: 0.9rem;">Please select a sport in
+                                    Step 1 to enter your statistics.</p>
+                            </div>
+
+                            <div class="form-group"
+                                style="background: rgba(0,0,0,0.2); padding: 1.5rem; border-radius: var(--radius-md);">
+                                <label>Upload Highlight Reel (Video Proof)</label>
+                                <p style="font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 1rem;">
+                                    Provide a YouTube or Vimeo link showcasing your abilities.</p>
+                                <input type="url" id="wiz-video" required
+                                    placeholder="https://www.youtube.com/watch?v=...">
+                            </div>
+
+                            <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                                <button type="button" class="btn secondary"
+                                    onclick="app.prevWizardStep(3)">Back</button>
+                                <button type="submit" class="btn primary">Calculate Contract Details <i
+                                        data-lucide="calculator"></i></button>
+                            </div>
+                        </form>
+
+                        <!-- Step 4: Funding Calculator & Contract -->
+                        <form id="wiz-form-4" class="hidden" onsubmit="app.submitAthleteWizard(event)">
+                            <h3>Step 4: Smart Contract Terms</h3>
+                            <p class="mb-4">Our proprietary AI Valuation Model has analyzed your sport and statistics to
+                                estimate your potential career earnings. Based on this, we've formulated your required
+                                revenue-share offering.</p>
+
+                            <div
+                                style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 1.5rem; border-radius: var(--radius-md); margin-bottom: 2rem;">
+                                <h4 style="margin-top: 0; color: var(--color-accent); font-size: 1rem;"><i
+                                        data-lucide="brain-circuit"
+                                        style="width: 16px; height: 16px; display: inline-block; vertical-align: middle;"></i>
+                                    AI Valuation Estimate</h4>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                                    <span style="color: var(--color-text-muted); font-size: 0.9rem;">Estimated Future
+                                        Earnings:</span>
+                                    <strong style="font-size: 1.2rem; color: var(--color-text);">$<span
+                                            id="calc-earnings"></span></strong>
+                                </div>
+                                <p id="calc-justification"
+                                    style="font-size: 0.85rem; color: var(--color-text-muted); margin-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 0.5rem;">
+                                </p>
+                            </div>
+
+                            <div
+                                style="background: rgba(16, 185, 129, 0.1); border: 1px solid var(--color-accent); padding: 2rem; border-radius: var(--radius-md); text-align: center; margin-bottom: 2rem;">
+                                <div style="font-size: 1.2rem; margin-bottom: 0.5rem;">To successfully raise
+                                    <strong>$<span id="calc-goal"></span></strong>...
+                                </div>
+                                <div style="font-size: 1.2rem; margin-bottom: 1.5rem;">You must offer investors:</div>
+                                <div
+                                    style="font-size: 4rem; font-weight: 800; color: var(--color-accent); line-height: 1;">
+                                    <span id="calc-share">0</span>%
+                                </div>
+                                <p class="mt-4" style="font-size: 1rem; color: var(--color-text); font-weight: 600;">Of
+                                    your professional contract and sponsorship earnings for <strong>10 Years</strong>
+                                    after turning pro.</p>
+
+                            </div>
+
+                            <div
+                                style="background: rgba(255,165,0,0.1); border: 1px solid orange; padding: 1.5rem; border-radius: var(--radius-md); margin-bottom: 2rem;">
+                                <h4
+                                    style="color: orange; margin-top: 0; display: flex; align-items: center; gap: 0.5rem;">
+                                    <i data-lucide="alert-triangle" style="width: 20px; height: 20px;"></i> Identity &
+                                    Performance Verification required
+                                </h4>
+                                <p style="font-size: 0.9rem; margin-bottom: 0;">By signing the contract below, you agree
+                                    to these terms. Wait! You will not instantly receive funds. <strong>You will be
+                                        contacted by a CrowdAthlete staff member</strong> to verify your identity,
+                                    perform a background check, and validate your submitted performance statistics
+                                    before your profile goes live on the marketplace.</p>
+                            </div>
+
+                            <div class="form-group">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                    <input type="checkbox" required style="width: auto;">
+                                    I agree to the legally binding revenue-share terms outlined above.
+                                </label>
+                            </div>
+
+                            <div style="display: flex; gap: 1rem;">
+                                <button type="button" class="btn secondary"
+                                    onclick="app.prevWizardStep(4)">Back</button>
+                                <button type="submit" class="btn primary full-width">Sign Contract & Publish
+                                    Profile</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Athlete Dashboard -->
+            <section id="view-athlete-dashboard" class="view hidden">
+                <div class="container fade-in">
+                    <h2>My Dashboard</h2>
+                    <div class="card glass text-center">
+                        <h3 id="dash-ath-name">Welcome!</h3>
+                        <div class="progress-bar-container large">
+                            <div class="progress-bar" id="dash-ath-progress" style="width: 0%"></div>
+                        </div>
+                        <div class="progress-stats">
+                            <span id="dash-ath-raised">$0 raised</span>
+                            <span id="dash-ath-goal">of $0 goal</span>
+                        </div>
+                        <p class="mt-4">Keep sharing your profile to reach your goal securely.</p>
+                        <button class="btn secondary mt-4" onclick="app.navigate('edit-profile')">Edit Profile <i
+                                data-lucide="edit-2"></i></button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Edit Athlete Profile -->
+            <section id="view-edit-profile" class="view hidden">
+                <div class="container fade-in">
+                    <h2>Edit Profile</h2>
+                    <div class="card">
+                        <form id="edit-profile-form" onsubmit="app.submitEditProfile(event)">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" id="edit-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Country</label>
+                                <input type="text" id="edit-country" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Birthday</label>
+                                <input type="date" id="edit-birthday" required>
+                            </div>
+                            <div class="form-group">
+                                <label>About Me</label>
+                                <textarea id="edit-bio" rows="4" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Bio / Goal Description</label>
+                                <textarea id="edit-use" rows="2" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Profile Image URL</label>
+                                <input type="url" id="edit-image" placeholder="https://...">
+                            </div>
+                            <div class="form-group">
+                                <label>Highlight Video URL</label>
+                                <input type="url" id="edit-video" placeholder="https://...">
+                            </div>
+                            <div id="edit-stats-container">
+                                <div class="form-group">
+                                    <label id="label-stat1">Statistic 1</label>
+                                    <input type="text" id="edit-stat1">
+                                </div>
+                                <div class="form-group">
+                                    <label id="label-stat2">Statistic 2</label>
+                                    <input type="text" id="edit-stat2">
+                                </div>
+                                <div class="form-group" id="group-stat3">
+                                    <label id="label-stat3">Statistic 3</label>
+                                    <input type="text" id="edit-stat3">
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                                <button type="button" class="btn secondary"
+                                    onclick="app.navigate('athlete-dashboard')">Cancel</button>
+                                <button type="submit" class="btn primary">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
