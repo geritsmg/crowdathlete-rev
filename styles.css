@@ -1109,3 +1109,100 @@ textarea:focus {
         border-bottom: 1px solid rgba(255,255,255,0.04);
     }
 }
+
+/* Success Stories Horizontal Scrolling */
+.landing-success-stories {
+    padding: 4rem 0;
+    overflow: hidden; /* Prevents the whole page from scrolling horizontally */
+}
+
+.stories-scroll-container {
+    display: flex;
+    gap: 1.5rem;
+    padding: 1rem 2rem 2rem 2rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory; /* Makes it snap smoothly to the next card */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+}
+
+/* Hide scrollbar for Chrome/Safari */
+.stories-scroll-container::-webkit-scrollbar {
+    display: none; 
+}
+
+.story-card {
+    min-width: 320px;
+    max-width: 320px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    overflow: hidden;
+    scroll-snap-align: center;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.story-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(16, 185, 129, 0.5);
+}
+
+.story-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+.story-content {
+    padding: 1.5rem;
+}
+
+.story-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.story-content h3 {
+    margin: 0;
+    font-size: 1.3rem;
+}
+
+.story-desc {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0.75rem 0 1.25rem 0;
+    line-height: 1.5;
+}
+
+.story-stats {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1rem;
+}
+
+.story-stat {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.85rem;
+}
+
+.story-stat span {
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 0.2rem;
+}
+
+.story-stat strong {
+    font-size: 1.1rem;
+}
+
+.text-green {
+    color: #10B981 !important;
+}
