@@ -1336,3 +1336,69 @@ const app = {
 document.addEventListener('DOMContentLoaded', () => {
     app.init();
 });
+
+// Array of mock success stories
+const successStoriesData = [
+    {
+        name: "Mateo Rossi",
+        sport: "Tennis",
+        raised: "$25,000",
+        roi: "18% ROI",
+        image: "https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?auto=format&fit=crop&q=80&w=400&h=300",
+        story: "Mateo used funding to join the European tour. He broke into the top 100 and signed a major racket sponsorship."
+    },
+    {
+        name: "Sarah Jenkins",
+        sport: "Track & Field",
+        raised: "$12,000",
+        roi: "14% ROI",
+        image: "https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&q=80&w=400&h=300",
+        story: "Funded her elite coaching and travel to the national trials, securing a spot on the Olympic team."
+    },
+    {
+        name: "Diego Fernandez",
+        sport: "Soccer",
+        raised: "$40,000",
+        roi: "22% ROI",
+        image: "https://images.unsplash.com/photo-1511886929837-354d827aae26?auto=format&fit=crop&q=80&w=400&h=300",
+        story: "Moved to Europe for academy training without taking on debt, eventually signing a first-team contract in La Liga."
+    },
+    {
+        name: "Elena Kova",
+        sport: "Golf",
+        raised: "$30,000",
+        roi: "16% ROI",
+        image: "https://images.unsplash.com/photo-1535139262971-c51845709a48?auto=format&fit=crop&q=80&w=400&h=300",
+        story: "Covered Q-School registration and travel expenses, earning her LPGA tour card in her impressive rookie season."
+    }
+];
+
+// Function to render the stories to the HTML
+function renderSuccessStories() {
+    const container = document.getElementById('success-stories-container');
+    if (!container) return; // Exit if the container isn't found
+    
+    container.innerHTML = successStoriesData.map(story => `
+        <div class="story-card">
+            <img src="${story.image}" alt="${story.name}" class="story-img">
+            <div class="story-content">
+                <div class="story-badge">${story.sport}</div>
+                <h3>${story.name}</h3>
+                <p class="story-desc">${story.story}</p>
+                <div class="story-stats">
+                    <div class="story-stat">
+                        <span>Capital Raised</span>
+                        <strong>${story.raised}</strong>
+                    </div>
+                    <div class="story-stat">
+                        <span>Investor Return</span>
+                        <strong class="text-green">${story.roi}</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Run the function as soon as the webpage loads
+document.addEventListener('DOMContentLoaded', renderSuccessStories);
