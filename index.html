@@ -18,7 +18,7 @@
         <!-- Navigation -->
         <nav id="main-nav">
             <div class="nav-container">
-                <div class="logo">
+                <div class="logo" onclick="app.navigateHome()" style="cursor:pointer;">
                     <i data-lucide="activity"></i>
                     <span>CrowdAthletes</span>
                 </div>
@@ -36,19 +36,126 @@
             <!-- Views will be toggled here by JS -->
 
             <!-- Landing Page View -->
-            <section id="view-landing" class="view active">
-                <div class="hero">
-                    <h1>Bridge the Gap. Back the Future.</h1>
-                    <p>The premium platform connecting high-potential athletes with forward-thinking investors.</p>
-                    <div class="card glass">
-                        <h2>Join the Revolution</h2>
-                        <div class="button-group">
-                            <button class="btn primary" onclick="app.navigate('guide-athlete')">I am an Athlete</button>
-                            <button class="btn secondary" onclick="app.navigate('guide-investor')">I am an
-                                Investor</button>
+            <section id="view-landing" class="view active landing-page">
+
+                <!-- Hero with Video Background -->
+                <div class="landing-hero">
+                    <video autoplay muted loop playsinline class="landing-video">
+                        <source src="6230f33814a11df2d262cc18_687f4830d25fe09ff415b56d_video]-transcode.mp4" type="video/mp4">
+                    </video>
+                    <div class="landing-video-overlay"></div>
+                    <div class="landing-hero-content fade-in">
+                        <div class="landing-badge">The Future of Athletic Finance</div>
+                        <h1>Fund Your Dream.<br>Back a Champion.</h1>
+                        <p class="landing-hero-sub">CrowdAthletes connects high-potential athletes with investors who believe in them — before the world does.</p>
+                        <div class="landing-cta-group">
+                            <button class="btn primary lg" onclick="app.navigate('guide-athlete')">I'm an Athlete</button>
+                            <button class="btn outline lg" onclick="app.navigate('guide-investor')">I'm an Investor</button>
+                        </div>
+                    </div>
+                    <div class="landing-scroll-hint">
+                        <i data-lucide="chevron-down"></i>
+                    </div>
+                </div>
+
+                <!-- Stats Bar -->
+                <div class="landing-stats-bar">
+                    <div class="landing-stat">
+                        <span class="landing-stat-value">$2.4M+</span>
+                        <span class="landing-stat-label">Raised for Athletes</span>
+                    </div>
+                    <div class="landing-stat">
+                        <span class="landing-stat-value">120+</span>
+                        <span class="landing-stat-label">Athletes Funded</span>
+                    </div>
+                    <div class="landing-stat">
+                        <span class="landing-stat-value">14.5%</span>
+                        <span class="landing-stat-label">Avg. Annual ROI</span>
+                    </div>
+                    <div class="landing-stat">
+                        <span class="landing-stat-value">18</span>
+                        <span class="landing-stat-label">Countries</span>
+                    </div>
+                </div>
+
+                <!-- How It Works -->
+                <div class="landing-section">
+                    <div class="container">
+                        <div class="section-label">The Platform</div>
+                        <h2 class="section-title">How It Works</h2>
+                        <div class="landing-how-grid">
+                            <div class="how-card">
+                                <div class="how-number">01</div>
+                                <i data-lucide="user-check" class="how-icon"></i>
+                                <h4>Athletes Apply</h4>
+                                <p>High-potential athletes create a profile, set a funding goal, and outline their masterplan for going pro.</p>
+                            </div>
+                            <div class="how-card">
+                                <div class="how-number">02</div>
+                                <i data-lucide="shield-check" class="how-icon"></i>
+                                <h4>We Verify</h4>
+                                <p>Our team validates identity, performance stats, and background before any profile goes live.</p>
+                            </div>
+                            <div class="how-card">
+                                <div class="how-number">03</div>
+                                <i data-lucide="trending-up" class="how-icon"></i>
+                                <h4>Investors Back Them</h4>
+                                <p>Investors fund athletes in exchange for a pre-agreed % of future professional contract earnings.</p>
+                            </div>
+                            <div class="how-card">
+                                <div class="how-number">04</div>
+                                <i data-lucide="trophy" class="how-icon"></i>
+                                <h4>Everyone Wins</h4>
+                                <p>Athletes go pro debt-free. Investors earn returns when the athlete signs their first professional deal.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- Dual Path: Athlete vs Investor -->
+                <div class="landing-dual">
+                    <div class="dual-panel athlete-panel">
+                        <div class="dual-content">
+                            <div class="section-label orange">For Athletes</div>
+                            <h2>Focus on Your Craft.<br>We Handle the Rest.</h2>
+                            <ul class="dual-list">
+                                <li><i data-lucide="check-circle"></i> Raise capital without taking on debt</li>
+                                <li><i data-lucide="check-circle"></i> Set your own funding goal & masterplan</li>
+                                <li><i data-lucide="check-circle"></i> AI-powered contract valuation</li>
+                                <li><i data-lucide="check-circle"></i> Only pay back when you turn pro</li>
+                                <li><i data-lucide="check-circle"></i> Global investor network</li>
+                            </ul>
+                            <button class="btn primary" onclick="app.navigate('guide-athlete')">Apply as Athlete</button>
+                        </div>
+                    </div>
+                    <div class="dual-panel investor-panel">
+                        <div class="dual-content">
+                            <div class="section-label green">For Investors</div>
+                            <h2>Back the Next<br>Generation of Stars.</h2>
+                            <ul class="dual-list">
+                                <li><i data-lucide="check-circle"></i> Invest in verified, high-potential athletes</li>
+                                <li><i data-lucide="check-circle"></i> Earn % of future pro contract earnings</li>
+                                <li><i data-lucide="check-circle"></i> Trade shares on the secondary market</li>
+                                <li><i data-lucide="check-circle"></i> AI-matched to your risk profile</li>
+                                <li><i data-lucide="check-circle"></i> Diversify across sports & countries</li>
+                            </ul>
+                            <button class="btn accent" onclick="app.navigate('guide-investor')">Start Investing</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Final CTA -->
+                <div class="landing-final-cta">
+                    <div class="container text-center">
+                        <h2>Ready to Change<br>the Game?</h2>
+                        <p>Join athletes and investors already building the future of sports finance.</p>
+                        <div class="button-group mt-4">
+                            <button class="btn primary lg" onclick="app.navigate('guide-athlete')">I'm an Athlete</button>
+                            <button class="btn outline lg" onclick="app.navigate('guide-investor')">I'm an Investor</button>
+                        </div>
+                    </div>
+                </div>
+
             </section>
 
             <!-- Guide: Athlete -->
@@ -124,8 +231,33 @@
             <section id="view-register" class="view hidden">
                 <div class="container fade-in" style="max-width: 500px; margin-top: 5rem;">
                     <div class="card">
-                        <h2 id="register-title" class="text-center">Create Account</h2>
-                        <p class="text-center mb-4">Enter your email to register.</p>
+                        <h2 id="register-title" class="text-center register-title">Create Account</h2>
+                        <p class="text-center mb-4">Enter your details to register.</p>
+
+                        <!-- Social Auth Buttons -->
+                        <div class="social-auth">
+                            <button class="btn social-btn" onclick="app.socialAuth('google')">
+                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/>
+                                    <path d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"/>
+                                    <path d="M3.964 10.707A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.039l3.007-2.332z" fill="#FBBC05"/>
+                                    <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.96L3.964 7.294C4.672 5.163 6.656 3.58 9 3.58z" fill="#EA4335"/>
+                                </svg>
+                                Continue with Google
+                            </button>
+                            <button class="btn social-btn" onclick="app.socialAuth('microsoft')">
+                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M0 0h8.571v8.571H0z" fill="#F25022"/>
+                                    <path d="M9.429 0H18v8.571H9.429z" fill="#7FBA00"/>
+                                    <path d="M0 9.429h8.571V18H0z" fill="#00A4EF"/>
+                                    <path d="M9.429 9.429H18V18H9.429z" fill="#FFB900"/>
+                                </svg>
+                                Continue with Microsoft
+                            </button>
+                        </div>
+
+                        <div class="auth-divider"><span>or register with email</span></div>
+
                         <form id="register-form" onsubmit="app.submitRegister(event)">
                             <input type="hidden" id="register-type" name="type" value="investor">
                             <div class="form-group">
@@ -577,6 +709,27 @@
 
     <!-- Notification Toast -->
     <div id="toast-container"></div>
+
+    <!-- Mock OAuth Modal -->
+    <div id="oauth-modal-overlay" class="oauth-overlay hidden" onclick="app.closeOAuthModal(event)">
+        <div class="oauth-modal" id="oauth-modal">
+            <div class="oauth-modal-header" id="oauth-modal-header">
+                <!-- Injected by JS -->
+            </div>
+            <div class="oauth-modal-body">
+                <p class="oauth-choose-text">Choose an account</p>
+                <div class="oauth-accounts" id="oauth-accounts">
+                    <!-- Injected by JS -->
+                </div>
+                <button class="oauth-add-account" id="oauth-add-account">
+                    <!-- Injected by JS -->
+                </button>
+            </div>
+            <div class="oauth-modal-footer">
+                <a href="#" onclick="app.closeOAuthModal(); return false;">Cancel</a>
+            </div>
+        </div>
+    </div>
 
     <script src="app.js"></script>
 </body>
