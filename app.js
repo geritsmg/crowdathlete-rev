@@ -595,8 +595,9 @@ const app = {
                     </div>
 
                     ${athlete.videoUrl ? `
-                    <div class="card" style="padding: 0; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);">
-                        <div style="position: relative; padding-bottom: 56.25%; height: 0; width: 100%;">
+                    <div class="card mb-4">
+                        <h3 style="font-size: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem; margin-bottom: 1rem;">Highlights</h3>
+                        <div style="position: relative; padding-bottom: 56.25%; height: 0; width: 100%; border-radius: var(--radius-md); overflow: hidden; border: 1px solid rgba(255,255,255,0.1);">
                             <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="${athlete.videoUrl}" frameborder="0" allowfullscreen></iframe>
                         </div>
                     </div>` : ''}
