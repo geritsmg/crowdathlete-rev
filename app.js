@@ -115,8 +115,11 @@ const app = {
             this.navigate('landing');
         }
 
-        // Attach listeners for the budget calculator
-        setTimeout(() => this.attachBudgetListeners(), 500);
+        // Attach listeners for both budget calculators
+        setTimeout(() => {
+            this.attachBudgetListeners();
+            this.attachEditBudgetListeners(); 
+        }, 500);
     },
 
     // Navigation and Routing
@@ -852,6 +855,16 @@ const app = {
         });
     },
 
+    attachEditBudgetListeners() {
+        const inputs = ['edit-budget-training', 'edit-budget-travel', 'edit-budget-equipment'];
+        inputs.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener('input', () => this.calculateEditBudgetTotal());
+            }
+        });
+    },
+
     calculateBudgetTotal() {
         const training = parseFloat(document.getElementById('wiz-budget-training')?.value || 0);
         const travel = parseFloat(document.getElementById('wiz-budget-travel')?.value || 0);
@@ -859,6 +872,16 @@ const app = {
         
         const total = training + travel + equipment;
         const goalInput = document.getElementById('wiz-goal');
+        if (goalInput) goalInput.value = total > 0 ? total : '';
+    },
+
+    calculateEditBudgetTotal() {
+        const training = parseFloat(document.getElementById('edit-budget-training')?.value || 0);
+        const travel = parseFloat(document.getElementById('edit-budget-travel')?.value || 0);
+        const equipment = parseFloat(document.getElementById('edit-budget-equipment')?.value || 0);
+        
+        const total = training + travel + equipment;
+        const goalInput = document.getElementById('edit-goal');
         if (goalInput) goalInput.value = total > 0 ? total : '';
     },
 
@@ -1119,6 +1142,34 @@ const app = {
         document.getElementById('edit-use').value = ath.plan?.useOfFunds || '';
         document.getElementById('edit-image').value = ath.image || '';
         document.getElementById('edit-video').value = ath.videoUrl || '';
+        
+        // Populate new budget fields
+        document.getElementById('edit-budget-training').value = ath.plan?.budget?.training || 0;
+        document.getElementById('edit-budget-travel').value = ath.plan?.budget?.travel || 0;
+        document.getElementById('edit-budget-equipment').value = ath.plan?.budget?.equipment || 0;
+        document.getElementById('edit-goal').value = ath.goal || 0;
+
+        if (ath.stats) {
+            const keys = Object.keys(ath.stats);
+            if (keys.length > 0) {
+                document.getElementById('label-stat1').innerText = keys[0].replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+                document.getElementById('edit-stat1').value = ath.stats[keys[0]] || '';
+            }
+            if (keys.length > 1) {
+                document.getElementById('label-stat2').innerText = keys[1].replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+                document.getElementById('edit-stat2').value = ath.stats[keys[1]] || '';
+            }
+            if (keys.length > 2) {
+                document.getElementById('group-stat3').style.display = 'block';
+                document.getElementById('label-stat3').innerText = keys[2].replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+                document.getElementById('edit-stat3').value = ath.stats[keys[2]] || '';
+            } else {
+                document.getElementById('group-stat3').style.display = 'none';
+            }
+            window._editStatKeys = keys;
+        } else {
+            document.getElementById('group-stat3').style.display = 'none';
+        }
     },
 
     submitEditProfile(e) {
@@ -1131,30 +1182,81 @@ const app = {
         ath.country = document.getElementById('edit-country').value;
         ath.birthday = document.getElementById('edit-birthday').value;
         ath.bio = document.getElementById('edit-bio').value;
-        if (ath.plan) {
-            ath.plan.useOfFunds = document.getElementById('edit-use').value;
-        } else {
-            ath.plan = { useOfFunds: document.getElementById('edit-use').value, budget: {}, timePeriod: 'N/A', estEarnings: 0, revenueShare: 10 };
-        }
         ath.image = document.getElementById('edit-image').value;
         ath.videoUrl = document.getElementById('edit-video').value;
 
+        // Process New Budget & Recalculate Contract Terms
+        const training = parseFloat(document.getElementById('edit-budget-training').value || 0);
+        const travel = parseFloat(document.getElementById('edit-budget-travel').value || 0);
+        const equipment = parseFloat(document.getElementById('edit-budget-equipment').value || 0);
+        const newGoal = training + travel + equipment;
+        const newCoInvested = newGoal * 0.2; // 20% platform commitment
+        
+        let calculatedShare = 10; // Fallback
+        if (ath.plan && ath.plan.estEarnings > 0) {
+            let rawPct = (newGoal / ath.plan.estEarnings) * 100;
+            calculatedShare = rawPct * 1.5; // Risk Premium
+            if (calculatedShare > 30) calculatedShare = 30; // Max Cap
+            if (calculatedShare < 1) calculatedShare = 1;   // Min Cap
+        }
+        const finalShare = parseFloat(calculatedShare.toFixed(1));
+
+        if (ath.plan) {
+            ath.plan.useOfFunds = document.getElementById('edit-use').value;
+            ath.plan.budget = { training, travel, equipment };
+            ath.plan.revenueShare = finalShare;
+        } else {
+            ath.plan = { 
+                useOfFunds: document.getElementById('edit-use').value, 
+                budget: { training, travel, equipment }, 
+                timePeriod: '12 Months', 
+                estEarnings: 1000000, 
+                revenueShare: finalShare 
+            };
+        }
+        
+        ath.goal = newGoal;
+        ath.coInvested = newCoInvested;
+
+        if (!ath.stats) ath.stats = {};
+        if (window._editStatKeys && window._editStatKeys.length > 0) {
+            if (window._editStatKeys[0]) ath.stats[window._editStatKeys[0]] = document.getElementById('edit-stat1').value;
+            if (window._editStatKeys[1]) ath.stats[window._editStatKeys[1]] = document.getElementById('edit-stat2').value;
+            if (window._editStatKeys[2]) ath.stats[window._editStatKeys[2]] = document.getElementById('edit-stat3').value;
+        } else {
+            ath.stats.stat1 = document.getElementById('edit-stat1')?.value;
+            ath.stats.stat2 = document.getElementById('edit-stat2')?.value;
+        }
+
+        // Apply changes to the live Marketplace Database
         if (ath.marketId) {
             const marketAthlete = STATE.marketAthletes.find(a => a.id === ath.marketId);
             if (marketAthlete) {
                 marketAthlete.name = ath.name;
                 marketAthlete.country = ath.country;
+                marketAthlete.birthday = ath.birthday;
                 marketAthlete.bio = ath.bio;
-                marketAthlete.image = ath.image;
+                marketAthlete.image = ath.image || 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?fit=crop&w=500&q=80';
                 marketAthlete.videoUrl = ath.videoUrl;
-                if (marketAthlete.plan) marketAthlete.plan.useOfFunds = ath.plan.useOfFunds;
+                
+                marketAthlete.fundingGoal = newGoal;
+                marketAthlete.coInvested = newCoInvested;
+                marketAthlete.sharesTotal = Math.floor(newGoal / marketAthlete.sharePrice); // Adjust available shares
+                
+                if (marketAthlete.plan) {
+                    marketAthlete.plan.useOfFunds = ath.plan.useOfFunds;
+                    marketAthlete.plan.budget = { training, travel, equipment };
+                    marketAthlete.plan.revenueShare = finalShare;
+                }
+                marketAthlete.stats = ath.stats;
             }
         }
 
         saveState();
-        this.showToast('Profile updated successfully!');
+        this.showToast('Profile & Contract Terms updated successfully!');
         this.navigate('athlete-dashboard');
         this.renderAthleteDashboard();
+        this.renderNavbar();
     },
 
     populateInvestorEditProfile() {
