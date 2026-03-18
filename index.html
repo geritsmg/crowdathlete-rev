@@ -357,7 +357,7 @@
 
         
 
-            <section id="view-athlete-profile" class="view hidden">
+<section id="view-athlete-profile" class="view hidden">
     <div class="container fade-in" id="athlete-profile-container">
         
         <div style="display: flex; align-items: center; gap: 2rem; margin-bottom: 3rem;">
@@ -371,7 +371,6 @@
             </div>
             <div style="margin-left: auto; text-align: right;">
                 <button class="btn secondary mb-2" onclick="app.navigate('marketplace')">Back to Market</button>
-                <button class="btn primary full-width">Invest Now</button>
             </div>
         </div>
 
@@ -383,7 +382,7 @@
                     <p>I have dominated the South American junior circuit, but transitioning to the ATP Challenger Tour requires heavy travel to Europe. This funding unlocks a full year of European tournaments and a specialized clay-court coach.</p>
                 </div>
 
-                <div class="card">
+                <div class="card mb-4">
                     <h3 style="font-size: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem; margin-bottom: 1rem;">Use of Funds (Milestones)</h3>
                     <ul class="dual-list">
                         <li><i data-lucide="check-circle"></i> <strong>$15,000</strong> - Travel & Accommodation (12 European Tournaments)</li>
@@ -391,6 +390,25 @@
                         <li><i data-lucide="check-circle"></i> <strong>$2,000</strong> - Equipment & Physiotherapy</li>
                     </ul>
                 </div>
+
+                <div class="card mb-4">
+                    <h3 style="font-size: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem; margin-bottom: 1rem;">Track Record & Performance</h3>
+                    <div class="athlete-stats" style="border-top: none; padding-top: 0; margin-top: 0; flex-wrap: wrap; gap: 1.5rem; justify-content: flex-start;">
+                        <div class="stat mb-2">
+                            <span class="stat-label">Win Rate</span>
+                            <span class="stat-val" style="font-size: 1.2rem;">82%</span>
+                        </div>
+                        <div class="stat mb-2">
+                            <span class="stat-label">Current Rank</span>
+                            <span class="stat-val" style="font-size: 1.2rem;">Top 50 ITF</span>
+                        </div>
+                        <div class="stat mb-2">
+                            <span class="stat-label">Notable Titles</span>
+                            <span class="stat-val" style="font-size: 1.2rem;">2x Regional Champ</span>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
             <div>
@@ -412,6 +430,38 @@
                         <div style="font-size: 1.2rem; font-weight: 700; color: white;">$5,000 <span style="font-size: 0.9rem; font-weight: 400; color: var(--color-text-muted);">(20% completed)</span></div>
                     </div>
 
+                    <div style="margin: 2rem 0; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem;">
+                        <h4 style="color: var(--color-accent); font-size: 1.1rem; margin-bottom: 0.5rem;">Simulated ROI Scenarios</h4>
+                        <p style="font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 1rem;">Based on a $1,000 investment for proportional share.</p>
+                        
+                        <table style="width: 100%; text-align: left; border-collapse: collapse; background: rgba(0,0,0,0.2); border-radius: var(--radius-md); overflow: hidden;">
+                            <thead>
+                                <tr style="background: rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.1);">
+                                    <th style="padding: 0.75rem; font-size: 0.85rem; color: var(--color-text-muted); font-weight: 600;">Scenario</th>
+                                    <th style="padding: 0.75rem; font-size: 0.85rem; color: var(--color-text-muted); font-weight: 600;">Est. Earnings</th>
+                                    <th style="padding: 0.75rem; font-size: 0.85rem; color: var(--color-text-muted); font-weight: 600;">Returns</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 0.75rem; font-size: 0.9rem;">Conservative</td>
+                                    <td style="padding: 0.75rem; font-size: 0.9rem;">$200,000</td>
+                                    <td style="padding: 0.75rem; font-size: 0.9rem; font-weight: 700;">$960</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 0.75rem; font-size: 0.9rem;">Moderate</td>
+                                    <td style="padding: 0.75rem; font-size: 0.9rem;">$800,000</td>
+                                    <td style="padding: 0.75rem; font-size: 0.9rem; font-weight: 700; color: var(--color-accent);">+$3,840</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.75rem; font-size: 0.9rem;">Breakout</td>
+                                    <td style="padding: 0.75rem; font-size: 0.9rem;">$5,000,000</td>
+                                    <td style="padding: 0.75rem; font-size: 0.9rem; font-weight: 700; color: var(--color-accent);">+$24,000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
                     <button class="btn primary full-width mt-4">Buy Shares</button>
                 </div>
             </div>
@@ -419,6 +469,7 @@
         </div>
     </div>
 </section>
+
             <section id="view-portfolio" class="view hidden">
                 <div class="container fade-in">
                     
@@ -748,6 +799,7 @@
                                 <label>Total Funding Target</label>
                                 <input type="number" id="edit-goal" required readonly style="background: rgba(16, 185, 129, 0.1); border-color: var(--color-accent); color: var(--color-accent); font-weight: bold;">
                             </div>
+
                             <div class="form-group">
                                 <label>Bio / Goal Description</label>
                                 <textarea id="edit-use" rows="2" required></textarea>
