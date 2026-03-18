@@ -731,6 +731,23 @@
                                 <label>About Me</label>
                                 <textarea id="edit-bio" rows="4" required></textarea>
                             </div>
+                            
+                            <h3 class="mt-4 mb-4" style="font-size: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;">Budget & Funding Goal</h3>
+                            <div class="form-group" style="background: rgba(255,255,255,0.03); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid rgba(255,255,255,0.1);">
+                                <label>1. Elite Coaching & Training ($)</label>
+                                <input type="number" id="edit-budget-training" required>
+                                
+                                <label class="mt-4">2. Travel & Tournament Fees ($)</label>
+                                <input type="number" id="edit-budget-travel" required>
+                                
+                                <label class="mt-4">3. Equipment & Recovery ($)</label>
+                                <input type="number" id="edit-budget-equipment" required>
+                            </div>
+
+                            <div class="form-group mt-4">
+                                <label>Total Funding Target</label>
+                                <input type="number" id="edit-goal" required readonly style="background: rgba(16, 185, 129, 0.1); border-color: var(--color-accent); color: var(--color-accent); font-weight: bold;">
+                            </div>
                             <div class="form-group">
                                 <label>Bio / Goal Description</label>
                                 <textarea id="edit-use" rows="2" required></textarea>
