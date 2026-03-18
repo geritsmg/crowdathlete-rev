@@ -51,7 +51,7 @@ const DEFAULT_STATE = {
             sharePrice: 30,
             stats: { pb: '11.2s 100m', rank: 'National Champ' },
             bio: 'Sprinter targeting the Pan American games. I have reached the ceiling of what my local facilities can offer. I need funding for an elite high-altitude training camp in Bogota to shave off those final milliseconds.',
-            image: 'https://images.unsplash.com/photo-1552674605-1a8fb1de3e15?fit=crop&w=500&q=80',
+            image: 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=500&q=80',
             plan: {
                 useOfFunds: 'Moving to a high-altitude training camp in Bogota for 6 months prior to qualifications.',
                 budget: { training: 6000, travel: 5000, equipment: 4000 },
