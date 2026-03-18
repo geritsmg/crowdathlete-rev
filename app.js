@@ -529,9 +529,32 @@ const app = {
             budgetHtml = `<li><i data-lucide="check-circle"></i> <strong>$${athlete.fundingGoal.toLocaleString()}</strong> - Core Athletic Development</li>`;
         }
 
+        // Generate stats string
+        let statsHtml = '';
+        if (athlete.stats) {
+            Object.entries(athlete.stats).forEach(([key, val]) => {
+                const formattedKey = key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+                statsHtml += `
+                <div class="stat mb-2">
+                    <span class="stat-label">${formattedKey}</span>
+                    <span class="stat-val" style="font-size: 1.2rem;">${val}</span>
+                </div>`;
+            });
+        }
+
         // Potential Returns Logic
         const estEarnings = athlete.plan ? athlete.plan.estEarnings : 1000000;
         const revShare = athlete.plan ? athlete.plan.revenueShare / 100 : 0.1;
+        
+        // Calculate dynamic ROI Scenarios based on a $1,000 investment
+        const investmentSim = 1000;
+        const ownershipSim = investmentSim / athlete.fundingGoal; // Proportional ownership of the fund
+        const investorSharePct = revShare * ownershipSim; // Share of the total revenue share
+        
+        // Scenario earnings based loosely on sport AI data
+        const conservativeEst = estEarnings * 0.25; 
+        const moderateEst = estEarnings * 0.8;
+        const breakoutEst = estEarnings * 3.0;
 
         container.innerHTML = `
             <div style="display: flex; align-items: center; gap: 2rem; margin-bottom: 3rem;">
@@ -562,6 +585,13 @@ const app = {
                         <ul class="dual-list">
                             ${budgetHtml}
                         </ul>
+                    </div>
+
+                    <div class="card mb-4">
+                        <h3 style="font-size: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem; margin-bottom: 1rem;">Track Record & Performance</h3>
+                        <div class="athlete-stats" style="border-top: none; padding-top: 0; margin-top: 0; flex-wrap: wrap; gap: 1.5rem; justify-content: flex-start;">
+                            ${statsHtml}
+                        </div>
                     </div>
 
                     ${athlete.videoUrl ? `
@@ -596,6 +626,38 @@ const app = {
                         </div>
                         <div class="progress-stats mb-4">
                             <span>$${athlete.amountRaised.toLocaleString()} Raised total</span>
+                        </div>
+
+                        <div style="margin: 2rem 0; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem;">
+                            <h4 style="color: var(--color-accent); font-size: 1.1rem; margin-bottom: 0.5rem;">Simulated ROI Scenarios</h4>
+                            <p style="font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 1rem;">Based on a $1,000 investment</p>
+                            
+                            <table style="width: 100%; text-align: left; border-collapse: collapse; background: rgba(0,0,0,0.2); border-radius: var(--radius-md); overflow: hidden;">
+                                <thead>
+                                    <tr style="background: rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.1);">
+                                        <th style="padding: 0.75rem; font-size: 0.85rem; color: var(--color-text-muted); font-weight: 600;">Scenario</th>
+                                        <th style="padding: 0.75rem; font-size: 0.85rem; color: var(--color-text-muted); font-weight: 600;">Est. Earnings</th>
+                                        <th style="padding: 0.75rem; font-size: 0.85rem; color: var(--color-text-muted); font-weight: 600;">Your Return</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                        <td style="padding: 0.75rem; font-size: 0.9rem;">Conservative</td>
+                                        <td style="padding: 0.75rem; font-size: 0.9rem;">$${conservativeEst.toLocaleString()}</td>
+                                        <td style="padding: 0.75rem; font-size: 0.9rem; font-weight: 700;">$${Math.round(conservativeEst * investorSharePct).toLocaleString()}</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                        <td style="padding: 0.75rem; font-size: 0.9rem;">Moderate</td>
+                                        <td style="padding: 0.75rem; font-size: 0.9rem;">$${moderateEst.toLocaleString()}</td>
+                                        <td style="padding: 0.75rem; font-size: 0.9rem; font-weight: 700; color: var(--color-accent);">+$${Math.round(moderateEst * investorSharePct).toLocaleString()}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 0.75rem; font-size: 0.9rem;">Breakout</td>
+                                        <td style="padding: 0.75rem; font-size: 0.9rem;">$${breakoutEst.toLocaleString()}</td>
+                                        <td style="padding: 0.75rem; font-size: 0.9rem; font-weight: 700; color: var(--color-accent);">+$${Math.round(breakoutEst * investorSharePct).toLocaleString()}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
 
                         <div style="background: rgba(0,0,0,0.2); padding: 1.5rem; border-radius: var(--radius-md); margin-bottom: 1.5rem;">
