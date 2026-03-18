@@ -33,7 +33,7 @@
 
                 <div class="landing-hero">
                     <video autoplay muted loop playsinline class="landing-video">
-                        <source src="hero-video.mp4" type="video/mp4">
+                        <source src="6230f33814a11df2d262cc18_687f4830d25fe09ff415b56d_video]-transcode.mp4" type="video/mp4">
                     </video>
                     <div class="landing-video-overlay"></div>
                     <div class="landing-hero-content fade-in">
@@ -313,11 +313,18 @@
                 </div>
             </section>
 
-            <section id="view-marketplace" class="view hidden">
+          <section id="view-marketplace" class="view hidden">
                 <div class="container fade-in">
+                    
+                    <div style="display: flex; gap: 1rem; margin-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem; overflow-x: auto;">
+                        <button class="btn primary sm" onclick="app.navigate('marketplace')">Marketplace</button>
+                        <button class="btn outline sm" onclick="app.navigate('portfolio')">My Portfolio</button>
+                        <button class="btn outline sm" onclick="app.navigate('secondary-market')">Secondary Market</button>
+                    </div>
+
                     <div class="page-header">
                         <h2>Athlete Marketplace</h2>
-                        <p>Discover and invest in Latin America's rising stars.</p>
+                        <p>Discover and invest in rising stars.</p>
                     </div>
 
                     <div class="filters-container"
@@ -333,7 +340,7 @@
                         <select id="filter-country" class="form-input" onchange="app.renderMarketplace()"
                             style="flex: 1; min-width: 150px; background: rgba(255,255,255,0.05); color: white; border: 1px solid rgba(255,255,255,0.1); padding: 0.75rem; border-radius: var(--radius-md);">
                             <option value="all">All Countries</option>
-                            </select>
+                        </select>
                         <select id="filter-age" class="form-input" onchange="app.renderMarketplace()"
                             style="flex: 1; min-width: 150px; background: rgba(255,255,255,0.05); color: white; border: 1px solid rgba(255,255,255,0.1); padding: 0.75rem; border-radius: var(--radius-md);">
                             <option value="all">All Ages</option>
@@ -348,6 +355,8 @@
                 </div>
             </section>
 
+        
+
             <section id="view-athlete-profile" class="view hidden">
                 <div class="container fade-in" id="athlete-profile-container">
                     </div>
@@ -355,11 +364,16 @@
 
             <section id="view-portfolio" class="view hidden">
                 <div class="container fade-in">
-                    <div
-                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    
+                    <div style="display: flex; gap: 1rem; margin-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem; overflow-x: auto;">
+                        <button class="btn outline sm" onclick="app.navigate('marketplace')">Marketplace</button>
+                        <button class="btn primary sm" onclick="app.navigate('portfolio')">My Portfolio</button>
+                        <button class="btn outline sm" onclick="app.navigate('secondary-market')">Secondary Market</button>
+                    </div>
+
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
                         <h2 style="margin: 0;">My Portfolio</h2>
-                        <button class="btn secondary" onclick="app.navigate('edit-investor-profile')">Edit Profile <i
-                                data-lucide="edit-2"></i></button>
+                        <button class="btn secondary" onclick="app.navigate('edit-investor-profile')">Edit Profile <i data-lucide="edit-2"></i></button>
                     </div>
                     <div class="stats-grid">
                         <div class="stat-card glass">
@@ -377,7 +391,8 @@
                     </div>
                     <h3 class="mt-4">My Holdings</h3>
                     <div class="list" id="portfolio-holdings">
-                        </div>
+                        <p style="color: var(--color-text-muted);">You haven't invested in any athletes yet.</p>
+                    </div>
                 </div>
             </section>
 
@@ -412,10 +427,22 @@
 
             <section id="view-secondary-market" class="view hidden">
                 <div class="container fade-in">
+                    
+                    <div style="display: flex; gap: 1rem; margin-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem; overflow-x: auto;">
+                        <button class="btn outline sm" onclick="app.navigate('marketplace')">Marketplace</button>
+                        <button class="btn outline sm" onclick="app.navigate('portfolio')">My Portfolio</button>
+                        <button class="btn primary sm" onclick="app.navigate('secondary-market')">Secondary Market</button>
+                    </div>
+
                     <h2>Trading Floor</h2>
                     <p>Buy and sell athlete shares with other investors.</p>
                     <div class="grid" id="secondary-market-grid">
+                        <div class="card glass text-center" style="grid-column: 1 / -1; padding: 3rem;">
+                            <i data-lucide="activity" style="width: 48px; height: 48px; color: var(--color-text-muted); margin-bottom: 1rem;"></i>
+                            <h3 style="color: var(--color-text-muted);">Market is currently closed</h3>
+                            <p style="color: var(--color-text-muted);">No shares are available for trading at this moment.</p>
                         </div>
+                    </div>
                 </div>
             </section>
 
@@ -594,19 +621,26 @@
                 </div>
             </section>
 
-            <section id="view-athlete-dashboard" class="view hidden">
+           <section id="view-athlete-dashboard" class="view hidden">
                 <div class="container fade-in">
                     <h2>My Dashboard</h2>
                     <div class="card glass text-center">
-                        <h3 id="dash-ath-name">Welcome!</h3>
+                        <img src="https://images.unsplash.com/photo-1526232761682-d26e03ac148e?auto=format&fit=crop&q=80&w=150&h=150" alt="Athlete" style="width: 100px; height: 100px; border-radius: 50%; margin: 0 auto 1rem auto; object-fit: cover; border: 3px solid var(--color-accent);">
+                        <h3 id="dash-ath-name">Toto Vial</h3>
+                        <div style="display: inline-block; background: rgba(255, 255, 255, 0.1); color: #fff; padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1.5rem;">
+                            Tennis • Chile
+                        </div>
+                        
                         <div class="progress-bar-container large">
-                            <div class="progress-bar" id="dash-ath-progress" style="width: 0%"></div>
+                            <div class="progress-bar" id="dash-ath-progress" style="width: 65%; background-color: var(--color-accent);"></div>
                         </div>
-                        <div class="progress-stats">
-                            <span id="dash-ath-raised">$0 raised</span>
-                            <span id="dash-ath-goal">of $0 goal</span>
+                        <div class="progress-stats" style="display: flex; justify-content: space-between; margin-top: 0.5rem; font-weight: 600;">
+                            <span id="dash-ath-raised" class="text-green">$9,750 raised</span>
+                            <span id="dash-ath-goal">$15,000 goal</span>
                         </div>
-                        <p class="mt-4">Keep sharing your profile to reach your goal securely.</p>
+                        
+                        <p class="mt-4" style="color: var(--color-text-muted);">You are 65% of the way to funding your European Junior Circuit tour! Keep sharing your profile to reach your goal securely.</p>
+                        
                         <button class="btn secondary mt-4" onclick="app.navigate('edit-profile')">Edit Profile <i
                                 data-lucide="edit-2"></i></button>
                     </div>
